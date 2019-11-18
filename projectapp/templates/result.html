@@ -1,0 +1,25 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-md-12" style="margin-top: 70px">
+    <div class="col-md-12" style="height:680px;"> <center><strong><p style=" font-size: 28px; margin-top: 5px">{{message}}</p></strong></center> </div>
+    <div class="col-md-12" style="margin-top:-580px">
+        {% for item in items %}
+            <div class="col-md-12">
+                {% if not item.id %}
+                    <p style="font-size: large; margin-right: 30px"><strong>Repository name: {{item.title}} </strong></p>
+                {% else %}
+                    <div class="col-md-6"> <strong>Title</strong> {{item.title}} </div>
+                    <div class="col-md-2"> <strong>Id</strong>  {{item.id}}  </div>
+                    <div class="col-md-4"> <strong>Url</strong>
+                        <a style="color: #6b08b7" href="{{item.html_url}}">{{item.html_url}}</a></div>
+                {% endif %}
+            </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+   <div class="col-md-12">
+       <center>
+           {{message}}
+       </center>
+   </div>
+
+   <div class="col-md-12" style="margin-top: 80px">
+   <center> <p style="font-size: large; color: #003366"><strong> Search based on the main language of repositories  </strong> </p> </center>
+   </div>
+
+
+   <div class="col-md-12" style="height: 750px; margin-top: 20px">
+       <center>
+       <form method="get" action="/result" style="width: 340px;">
+          <div class="form-group">
+              <select onchange="showMe(this);" name="l" style="margin-bottom: 20px; width: 340px " id="search language"
+                      class="form-control js-advanced-search-prefix" tabindex="3" data-search-prefix="language">
+                  <option value="x">Any Language</option>
+                  {% for language in languages %}
+                      <option value={{language}}>{{language}}</option>
+                  {% endfor %}
+
+              </select>
+
+            <p style="font-size: large; color: #003366;  margin-top: 30px"><strong> --- OR --- </strong> </p>
+
+            <p style="font-size: large; color: #003366;  margin-top: 30px"><strong> Search specific ones </strong> </p>
+
+              <div style="height: 24em; margin-top: 20px; overflow: auto;">
+                <fieldset>
+                {% for name, repository in repositories.items %}
+                    <div id={{repository}}>
+                        <legend>{{name}}</legend>
+
+                        {% for repo in repository %}
+                            <div>
+                              <input type="checkbox" id="{{repo}}" name="repo" value="{{repo}}">
+                              <label for="{{repo}}">{{repo}}</label>
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+                {% endfor %}
+                </fieldset>
+              </div> <br>
+
+                 <button type="submit" >Search</button>
+
+           </div>
+       </form>
+       </center>
+   </div>
+{% endblock %}
