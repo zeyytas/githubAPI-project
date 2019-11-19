@@ -28,19 +28,26 @@ def __get_final_data(repositories):
                 labels_url = '+' + labels_url
 
             for language in repository.repository_language.all():
-                url = 'http://api.github.com/search/issues?q=language:{language}+no:assignee+repo:{repo}' \
-                      '{labels_url}&page={index}&per_page=100'.format(language=language, labels_url=labels_url,
-                                                                      repo=repo, index=1)
-                try:
-                    res = requests.get(url)
-                    res = res.json()
+                index = 1
+                while True:
+                    url = 'http://api.github.com/search/issues?q=language:{language}+no:assignee+repo:{repo}' \
+                          '{labels_url}&page={index}&per_page=100'.format(language=language, labels_url=labels_url,
+                                                                          repo=repo, index=index)
+                    try:
+                        res = requests.get(url)
+                        res = res.json()
 
-                    if res['items']:
-                        final_data['items'].append(repository.repo_address)
-                        final_data['items'].extend(res['items'])
-                except AttributeError:
-                    pass
+                        if res['items']:
+                            final_data['items'].append(repository.repo_address)
+                            final_data['items'].extend(res['items'])
 
+                        if res['total_count'] > 100 and index != (res['total_count'] % 100):
+                            index += 1
+                        else:
+                            break
+
+                    except AttributeError:
+                        pass
     return final_data
 
 
