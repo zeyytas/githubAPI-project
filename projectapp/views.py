@@ -20,7 +20,6 @@ def search(request):
 
 def __get_final_data(repositories):
     final_data = {'total_count': 0, 'items': []}
-
     for repo in repositories:
         for repository in Repositories.objects.filter(repo_address=repo):
 
@@ -29,8 +28,8 @@ def __get_final_data(repositories):
                 labels_url = '+' + labels_url
 
             for language in repository.repository_language.all():
-                url = 'http://projectapp.github.com/search/issues?q=language:{language}+no:assignee+repo:{repo}' \
-                      '{labels_url}&page={index}&per_page=20'.format(language=language, labels_url=labels_url,
+                url = 'http://api.github.com/search/issues?q=language:{language}+no:assignee+repo:{repo}' \
+                      '{labels_url}&page={index}&per_page=100'.format(language=language, labels_url=labels_url,
                                                                      repo=repo, index=1)
                 try:
                     res = requests.get(url)
@@ -38,7 +37,6 @@ def __get_final_data(repositories):
 
                     if res['items']:
                         final_data['items'].append(repository.repo_address)
-
                         final_data['items'].extend(res['items'])
                 except AttributeError:
                     pass
@@ -47,11 +45,12 @@ def __get_final_data(repositories):
 
 
 def result(request):
-    lang = request.GET['l']
+
     if request.GET.getlist('repo'):
         final_data = __get_final_data(request.GET.getlist('repo'))
 
     else:
+        lang = request.GET['l']
         repositories = Repositories.objects.filter(repository_language__repo_language=lang)
         final_data = __get_final_data(repositories)
 
