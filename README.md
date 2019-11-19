@@ -1,10 +1,17 @@
 
 <h1>Introduction</h1> 
 
-The app works dynamically and returns Github issues with specific repositories through specific labels.
+The app works dynamically and returns Github issues of specific repositories through specific labels.
 Repositories, labels and programming languages are expected to saved to database.
 
+```e.g. search page ```  
 
+![Image](/projectapp/static/images/search_page.png?raw=true "search page")
+
+```e.g. result page ``` 
+
+
+![Image](/projectapp/static/images/result_page.png?raw=true "result page")
 
 ## Installation
 
