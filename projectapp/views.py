@@ -19,7 +19,7 @@ def search(request):
 
 
 def __get_final_data(repositories):
-    final_data = {'total_count': 0, 'items': []}
+    final_data = {'items': []}
     for repo in repositories:
         for repository in Repositories.objects.filter(repo_address=repo):
 
@@ -30,7 +30,7 @@ def __get_final_data(repositories):
             for language in repository.repository_language.all():
                 url = 'http://api.github.com/search/issues?q=language:{language}+no:assignee+repo:{repo}' \
                       '{labels_url}&page={index}&per_page=100'.format(language=language, labels_url=labels_url,
-                                                                     repo=repo, index=1)
+                                                                      repo=repo, index=1)
                 try:
                     res = requests.get(url)
                     res = res.json()
