@@ -15,7 +15,7 @@ Repositories, labels and programming languages are expected to saved to database
 
 ## Installation
 
-First, start by closing the repository:
+Clone the repository to your local machine:
 
 ```
 git clone https://github.com/zeyytas/githubAPI-project.git
